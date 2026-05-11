@@ -1,0 +1,423 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D10000012F9CF51700DB6716 /* ILVisionDomain in Frameworks */ = {isa = PBXBuildFile; productRef = D10000022F9CF51700DB6716 /* ILVisionDomain */; };
+		D10000032F9CF52600DB6716 /* ILVisionData in Frameworks */ = {isa = PBXBuildFile; productRef = D10000042F9CF52600DB6716 /* ILVisionData */; };
+		D10000052F9CF54500DB6716 /* ILVisionUI in Frameworks */ = {isa = PBXBuildFile; productRef = D10000062F9CF54500DB6716 /* ILVisionUI */; };
+		D10000072F9CF55500DB6716 /* ILVisionSimulation in Frameworks */ = {isa = PBXBuildFile; productRef = D10000082F9CF55500DB6716 /* ILVisionSimulation */; };
+		D10000092F9CF57700DB6716 /* ILVisionCore in Frameworks */ = {isa = PBXBuildFile; productRef = D100000A2F9CF57700DB6716 /* ILVisionCore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D100000B2F9CF08B00DB6716 /* CleanDrawApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanDrawApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		D100000C2F9CF08D00DB6716 /* Exceptions for "App" folder in "CleanDrawApp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D100000D2F9CF08B00DB6716 /* CleanDrawApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D100000E2F9CF08B00DB6716 /* App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D100000C2F9CF08D00DB6716 /* Exceptions for "App" folder in "CleanDrawApp" target */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D100000F2F9CF08B00DB6716 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D10000072F9CF55500DB6716 /* ILVisionSimulation in Frameworks */,
+				D10000052F9CF54500DB6716 /* ILVisionUI in Frameworks */,
+				D10000012F9CF51700DB6716 /* ILVisionDomain in Frameworks */,
+				D10000092F9CF57700DB6716 /* ILVisionCore in Frameworks */,
+				D10000032F9CF52600DB6716 /* ILVisionData in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D10000102F9CF08B00DB6716 = {
+			isa = PBXGroup;
+			children = (
+				D100000E2F9CF08B00DB6716 /* App */,
+				D10000112F9CF08B00DB6716 /* Packages */,
+				D10000122F9CF08B00DB6716 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D10000112F9CF08B00DB6716 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		D10000122F9CF08B00DB6716 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D100000B2F9CF08B00DB6716 /* CleanDrawApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D100000D2F9CF08B00DB6716 /* CleanDrawApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D10000132F9CF08D00DB6716 /* Build configuration list for PBXNativeTarget "CleanDrawApp" */;
+			buildPhases = (
+				D10000142F9CF08B00DB6716 /* Sources */,
+				D100000F2F9CF08B00DB6716 /* Frameworks */,
+				D10000152F9CF08B00DB6716 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D100000E2F9CF08B00DB6716 /* App */,
+			);
+			name = CleanDrawApp;
+			packageProductDependencies = (
+				D10000022F9CF51700DB6716 /* ILVisionDomain */,
+				D10000042F9CF52600DB6716 /* ILVisionData */,
+				D10000062F9CF54500DB6716 /* ILVisionUI */,
+				D10000082F9CF55500DB6716 /* ILVisionSimulation */,
+				D100000A2F9CF57700DB6716 /* ILVisionCore */,
+			);
+			productName = CleanDrawApp;
+			productReference = D100000B2F9CF08B00DB6716 /* CleanDrawApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D10000162F9CF08B00DB6716 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					D100000D2F9CF08B00DB6716 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = D10000172F9CF08B00DB6716 /* Build configuration list for PBXProject "CleanArchitectureVisionOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D10000102F9CF08B00DB6716;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D10000182F9CF51700DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionDomain" */,
+				D10000192F9CF52600DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionData" */,
+				D100001A2F9CF54500DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionUI" */,
+				D100001B2F9CF55500DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionSimulation" */,
+				D100001C2F9CF57700DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D10000122F9CF08B00DB6716 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D100000D2F9CF08B00DB6716 /* CleanDrawApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D10000152F9CF08B00DB6716 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D10000142F9CF08B00DB6716 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D100001D2F9CF08D00DB6716 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52RX5R54N7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CleanDrawApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 26.0; CODE_SIGN_ENTITLEMENTS = App/CleanDrawApp.entitlements;
+			};
+			name = Debug;
+		};
+		D100001E2F9CF08D00DB6716 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52RX5R54N7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CleanDrawApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 7;
+				XROS_DEPLOYMENT_TARGET = 26.0; CODE_SIGN_ENTITLEMENTS = App/CleanDrawApp.entitlements;
+			};
+			name = Release;
+		};
+		D100001F2F9CF08D00DB6716 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = xros;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				XROS_DEPLOYMENT_TARGET = 26.0; CODE_SIGN_ENTITLEMENTS = App/CleanDrawApp.entitlements;
+			};
+			name = Debug;
+		};
+		D10000202F9CF08D00DB6716 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = xros;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 26.0; CODE_SIGN_ENTITLEMENTS = App/CleanDrawApp.entitlements;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D10000132F9CF08D00DB6716 /* Build configuration list for PBXNativeTarget "CleanDrawApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D100001D2F9CF08D00DB6716 /* Debug */,
+				D100001E2F9CF08D00DB6716 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D10000172F9CF08B00DB6716 /* Build configuration list for PBXProject "CleanArchitectureVisionOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D100001F2F9CF08D00DB6716 /* Debug */,
+				D10000202F9CF08D00DB6716 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		D10000182F9CF51700DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionDomain;
+		};
+		D10000192F9CF52600DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionData" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionData;
+		};
+		D100001A2F9CF54500DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionUI;
+		};
+		D100001B2F9CF55500DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionSimulation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionSimulation;
+		};
+		D100001C2F9CF57700DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D10000022F9CF51700DB6716 /* ILVisionDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ILVisionDomain;
+		};
+		D10000042F9CF52600DB6716 /* ILVisionData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ILVisionData;
+		};
+		D10000062F9CF54500DB6716 /* ILVisionUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ILVisionUI;
+		};
+		D10000082F9CF55500DB6716 /* ILVisionSimulation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ILVisionSimulation;
+		};
+		D100000A2F9CF57700DB6716 /* ILVisionCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ILVisionCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D10000162F9CF08B00DB6716 /* Project object */;
+}

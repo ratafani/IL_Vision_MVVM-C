@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UIApplicationPreferredDefaultSceneSessionRole</key>
+		<string>UIWindowSceneSessionRoleApplication</string>
+		<key>UISceneConfigurations</key>
+		<dict/>
+	</dict>
+	<key>NSHandsTrackingUsageDescription</key>
+	<string>Used to track your hand gestures for drawing in 3D space.</string>
+	<key>NSWorldSensingUsageDescription</key>
+	<string>Used to anchor your drawings to the physical environment.</string>
+</dict>
+</plist>

@@ -1,0 +1,26 @@
+# Xcode
+#
+build/
+DerivedData/
+*.hmap
+*.ipa
+*.playground.xcworkspace
+!default.profraw
+
+# Bundle config
+*.bundle
+
+# User settings
+xcuserdata/
+
+# Swift Package Manager
+#
+.build/
+.swiftpm/
+
+# OS X
+#
+.DS_Store
+
+# Endpoints
+*.entitlements
