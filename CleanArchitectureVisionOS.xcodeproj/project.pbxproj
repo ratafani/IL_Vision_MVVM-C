@@ -139,6 +139,8 @@
 				D100001A2F9CF54500DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionUI" */,
 				D100001B2F9CF55500DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionSimulation" */,
 				D100001C2F9CF57700DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionCore" */,
+				D100001D2F9CF58800DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionHandTracking" */,
+				D100001E2F9CF59900DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionAssets" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D10000122F9CF08B00DB6716 /* Products */;
@@ -393,6 +395,14 @@
 		D100001C2F9CF57700DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionCore" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ILVisionCore;
+		};
+		D100001D2F9CF58800DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionHandTracking" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionHandTracking;
+		};
+		D100001E2F9CF59900DB6716 /* XCLocalSwiftPackageReference "Packages/ILVisionAssets" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ILVisionAssets;
 		};
 /* End XCLocalSwiftPackageReference section */
 

@@ -12,7 +12,8 @@ let package = Package(
         .package(path: "../ILVisionCore"),
         .package(path: "../ILVisionSimulation"),
         .package(path: "../ILVisionData"),
-        .package(path: "../ILVisionHandTracking")
+        .package(path: "../ILVisionHandTracking"),
+        .package(path: "../ILVisionAssets")
     ],
     targets: [
         .target(
@@ -22,7 +23,8 @@ let package = Package(
                 "ILVisionCore",
                 "ILVisionSimulation",
                 "ILVisionData",
-                "ILVisionHandTracking"
+                "ILVisionHandTracking",
+                "ILVisionAssets"
             ]
         ),
     ]

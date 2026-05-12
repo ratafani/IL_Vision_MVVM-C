@@ -21,7 +21,7 @@ struct CleanDrawApp: App {
         DrawingSystem.registerSystem()
         
         // Start SharePlay listener
-        Task {
+        Task {    
             await ILVisionInjection.shared.sharePlayManager.startListening()
         }
     }

@@ -10,7 +10,8 @@ let package = Package(
     dependencies: [
         .package(path: "../ILVisionDomain"),
         .package(path: "../ILVisionCore"),
-        .package(path: "../ILVisionHandTracking")
+        .package(path: "../ILVisionHandTracking"),
+        .package(path: "../ILVisionAssets")
     ],
     targets: [
         .target(
@@ -18,7 +19,8 @@ let package = Package(
             dependencies: [
                 "ILVisionDomain",
                 "ILVisionCore",
-                "ILVisionHandTracking"
+                "ILVisionHandTracking",
+                "ILVisionAssets"
             ]
         ),
     ]
