@@ -1,62 +1,224 @@
-# ILVision: Enterprise Flight Simulation Framework for visionOS
+# ILVision Enterprise Architecture
 
-ILVision is a high-performance framework for building immersive training and simulation applications on Apple Vision Pro. It demonstrates a robust **MVVM-C-ECS** architecture that bridges professional 2D interface management with high-frequency 3D simulation logic.
-
----
-
-## Why This Architecture?
-
-Developing for visionOS presents a unique challenge: managing traditional 2D SwiftUI windows alongside a 90FPS RealityKit rendering loop. This project solves that by enforcing strict boundaries:
-
-*   **Modular Compilation**: By using 7 local Swift Packages, only the modified parts of the app are recompiled, drastically reducing development iteration time.
-*   **Decoupled Rendering**: The 3D Simulation (ECS) is decoupled from the UI (SwiftUI). You can update the cockpit layout without touching the flight physics, and vice-versa.
-*   **Hardware Abstraction**: Low-level sensors (ARKit Hand Tracking) are isolated, allowing the core simulation logic to remain pure and testable.
-*   **Asset Safety**: 3D content is managed in a dedicated package, ensuring that binary asset updates do not interfere with source code stability.
+> A high-fidelity, modular framework for building immersive Mixed Reality (MR) flight simulation and training applications on Apple Vision Pro.
 
 ---
 
-## Module Architecture
+## Table of Contents
 
-The project is structured into specialized local packages, each with a single responsibility:
+- [Overview](#overview)
+- [Architecture Philosophy](#architecture-philosophy)
+- [Paradigm: MVVM-C + ECS Hybrid](#paradigm-mvvm-c--ecs-hybrid)
+  - [The MVVM-Coordinator Pattern](#the-mvvm-coordinator-pattern)
+  - [Entity Component System (ECS)](#entity-component-system-ecs)
+  - [The Bridge Layer](#the-bridge-layer)
+- [Module Architecture (SPM)](#module-architecture-spm)
+  - [Dependency Graph](#dependency-graph)
+  - [Module Responsibilities](#module-responsibilities)
+- [Project Structure](#project-structure)
+- [Data Flow](#data-flow)
+  - [End-to-End Trace: Cockpit Lever Interaction](#end-to-end-trace-cockpit-lever-interaction)
+- [Concurrency Model](#concurrency-model)
+  - [Actor Isolation Strategy](#actor-isolation-strategy)
+  - [Threading Boundaries](#threading-boundaries)
+- [Asset Management](#asset-management)
+  - [Separation of Concerns: The Art Team Workflow](#separation-of-concerns-the-art-team-workflow)
+- [Key Implementation Examples](#key-implementation-examples)
+  - [Dependency Injection (ILVisionCore)](#dependency-injection-ilvisioncore)
+  - [ECS-SwiftUI Bridge (AppModelServiceComponent)](#ecs-swiftui-bridge-appmodelservicecomponent)
+- [Dependencies](#dependencies)
 
-| Package | Role | Why it helps |
+---
+
+## Overview
+
+**ILVision** is designed to solve the core engineering challenges of spatial computing: bridging complex, high-frequency 3D simulation states with transactional, predictable UI state management. 
+
+The framework enables teams of developers and artists to work in parallel on a single codebase by enforcing strict binary boundaries between hardware interaction, business logic, and visual assets.
+
+---
+
+## Architecture Philosophy
+
+The architecture is governed by **three non-negotiable principles**:
+
+**1. Strict Domain Separation.** No module reaches into another module's internal implementation. `ILVisionSimulation` (3D) has zero knowledge that `ILVisionUI` (SwiftUI) exists. They communicate only through the `ILVisionDomain` layer.
+
+**2. Unidirectional Data Flow.** State mutations happen in exactly one place: the `@MainActor` isolated `@Observable` state. All asynchronous results—hand tracking, physics ticks, network messages—re-enter the system as explicit state updates.
+
+**3. Actor Isolation at Async Boundaries.** Swift 6 strict concurrency is fully adopted. Modules crossing thread boundaries use `actor` isolation, and all shared types conform to `Sendable`.
+
+---
+
+## Paradigm: MVVM-C + ECS Hybrid
+
+The project manages two fundamentally different state management worlds:
+
+- **MVVM-C** for application state: User sessions, training progress, 2D panels, and navigation flow.
+- **ECS** (Entity Component System) for 3D state: Lever positions, cockpit animations, collision detection, and spatial audio.
+
+### The MVVM-Coordinator Pattern
+
+Used for the "Presentation Layer" to manage windows and user flow:
+
+| Component | Role | Implementation |
+|-----------|------|----------------|
+| **Coordinator** | Navigation & Scene Lifecycle | `AppCoordinator` — Orchestrates transitions between Shared Space and Immersive Space. |
+| **ViewModel** | UI State Orchestration | `DrawingViewModel` — Transforms domain data into view-ready state. |
+| **Model** | Central State | `AppModel` — A single `@Observable` source of truth for the UI. |
+
+### Entity Component System (ECS)
+
+RealityKit's ECS is the standard for 3D content, running at 90fps:
+
+| Concept | Role | Example |
+|---------|------|---------|
+| **Entity** | A 3D object in the world | `throttleLeverEntity` |
+| **Component** | Pure data attached to an entity | `ThrottleComponent(value: 0.72)` |
+| **System** | Logic running every frame | `FlightSystem` — Iterates entities with `ThrottleComponent` to calculate thrust. |
+
+### The Bridge Layer
+
+The Bridge Layer translates between the two worlds without coupling them:
+
+```
+ECS Interaction Event ──→ Service/Repository ──→ AppModel Update  (Simulation tells UI)
+AppModel State Change ──→ Component Update   ──→ ECS Frame Update (UI tells Simulation)
+```
+
+---
+
+## Module Architecture (SPM)
+
+The project is broken into **7 local Swift Packages**, enforcing explicit public interfaces.
+
+### Dependency Graph
+
+```mermaid
+graph TD
+    App[App Target] --> UI[ILVisionUI]
+    UI --> Sim[ILVisionSimulation]
+    UI --> Data[ILVisionData]
+    UI --> Core[ILVisionCore]
+    Sim --> Domain[ILVisionDomain]
+    Sim --> HT[ILVisionHandTracking]
+    Sim --> Assets[ILVisionAssets]
+    Data --> Domain
+    Core --> Domain
+    Core --> Data
+```
+
+### Module Responsibilities
+
+| Layer | Module | Purpose |
 | :--- | :--- | :--- |
-| **`ILVisionDomain`** | Core Logic | Contains pure Swift models and protocols. The "Single Source of Truth." |
-| **`ILVisionData`** | Persistence | Handles SharePlay networking, API clients, and local storage. |
-| **`ILVisionAssets`** | 3D Content | Dedicated Reality Composer Pro bundle. Keeps binary assets isolated from code. |
-| **`ILVisionHandTracking`** | Hardware | Wraps ARKit Skeletal Hand Tracking into reusable RealityKit Systems. |
-| **`ILVisionSimulation`** | 3D Engine | RealityKit ECS Systems (Movement, Interaction, Collision). |
-| **`ILVisionUI`** | Presentation | SwiftUI Views, ViewModels, and AppCoordinators for window management. |
-| **`ILVisionCore`** | Injection | The Dependency Injection hub that wires all modules together. |
+| **Foundation** | `ILVisionDomain` | Core Models (`User`, `FlightState`) and Repository Protocols. |
+| **Hardware** | `ILVisionHandTracking` | ARKit Skeleton wrappers and custom gesture detection. |
+| **Assets** | `ILVisionAssets` | Reality Composer Pro project and 3D binary assets. |
+| **Simulation** | `ILVisionSimulation` | ECS Systems, Components, and 3D Interaction logic. |
+| **Data** | `ILVisionData` | SharePlay synchronization, Persistence, and Networking. |
+| **Presentation** | `ILVisionUI` | SwiftUI Views, ViewModels, and the AppCoordinator. |
+| **DI Hub** | `ILVisionCore` | The Glue—Wires concrete implementations into Domain protocols. |
 
 ---
 
-## Developer Workflow
+## Project Structure
 
-### 1. Adding a New Feature
-To add a new feature (e.g., "Engine Startup Training"):
-1.  **Define the Interface**: Add a new protocol in `ILVisionDomain`.
-2.  **Implement Data**: Add a repository in `ILVisionData` to handle state persistence.
-3.  **Create the Simulation**: Add ECS Components and Systems in `ILVisionSimulation` to handle 3D interaction.
-4.  **Build the UI**: Add a feature folder in `ILVisionUI` for the SwiftUI panels and ViewModels.
-5.  **Inject**: Register the new services in `ILVisionCore`.
-
-### 2. Managing 3D Assets
-All 3D models and RealityKit scenes live in **`ILVisionAssets`**. 
-*   Open the `RealityContent.rkassets` folder in Reality Composer Pro to add new cockpit parts or environment models.
-*   Reference these assets in `ILVisionSimulation` using the `ILVisionAssets.bundle` identifier.
-
-### 3. Communicating Between UI and 3D
-The app uses a **Bridge Pattern** to sync states:
-*   **UI → Simulation**: The SwiftUI ViewModels update the `AppModel`, which is read by ECS Systems via the `AppModelServiceComponent`.
-*   **Simulation → UI**: ECS Systems publish events or update shared repositories that the SwiftUI layer observes.
+```
+CleanArchitectureVisionOS/
+├── App/                          ← Xcode Target (Thin orchestration)
+│   ├── CleanDrawApp.swift        ← @main entry point, Scene architecture
+│   └── Info.plist                ← Capabilities (SharePlay, Multiple Scenes)
+│
+├── Packages/                     ← 100% Local Modular logic
+│   ├── ILVisionDomain/           ← The "Brain" (Pure Swift, No dependencies)
+│   ├── ILVisionData/             ← The "Memory" (SharePlay, Repositories)
+│   ├── ILVisionCore/             ← The "Glue" (Dependency Injection)
+│   ├── ILVisionHandTracking/     ← The "Nerves" (ARKit/Hardware)
+│   ├── ILVisionSimulation/       ← The "Body" (RealityKit ECS)
+│   ├── ILVisionUI/               ← The "Face" (SwiftUI Views/ViewModels)
+│   └── ILVisionAssets/           ← The "Skin" (3D Models/Art Assets)
+│
+└── README.md
+```
 
 ---
 
-## Technical Specifications
+## Data Flow
 
-*   **Platform**: visionOS 2.0+ (v26.0)
-*   **Rendering**: RealityKit (ECS)
-*   **Interaction**: ARKit (Hand Tracking)
-*   **Collaboration**: GroupActivities (SharePlay)
-*   **Patterns**: MVVM-C (Model-View-ViewModel-Coordinator), Clean Architecture, Dependency Injection.
+### End-to-End Trace: Cockpit Lever Interaction
+
+Traces a single user gesture—pulling the landing gear lever—through every layer:
+
+1.  **T0 [Hardware / ARKit]**: `HandTrackingSystem` detects the right hand's position and the "Grab" gesture.
+2.  **T1 [Simulation / ECS]**: `InteractionSystem` finds the lever entity. It updates the lever's visual rotation at 90fps for instant haptic/visual feedback.
+3.  **T2 [Simulation / Component]**: The system updates the `GearLeverComponent` with the new state (e.g., `.lowering`).
+4.  **T3 [Bridge / MainActor]**: A weak-reference bridge calls `ILVisionInjection.shared.flightRepository.updateGearState(.lowering)`.
+5.  **T4 [Domain / State]**: The `AppModel` updates. SwiftUI detects the state change.
+6.  **T5 [UI / SwiftUI]**: The instrument panel view re-renders, showing the landing gear lights transitioning from Green to Red.
+7.  **T6 [Data / SharePlay]**: `SharePlayManager` broadcasts the gear state update to all other participants in the cockpit.
+
+---
+
+## Concurrency Model
+
+### Actor Isolation Strategy
+
+- **`@MainActor`**: 100% of the UI layer, ViewModels, and the DI Container are isolated here to prevent race conditions on state updates.
+- **`@globalActor`**: (Future) Physics calculations or heavy data processing can be isolated to a custom global actor to avoid blocking the Main thread.
+- **RealityKit Systems**: Run on the system's render thread but use `@MainActor` to safely access shared application state.
+
+---
+
+## Asset Management
+
+### Separation of Concerns: The Art Team Workflow
+
+The `ILVisionAssets` package provides a **Firewall** between Art and Code:
+
+1.  **Artists** work exclusively in the `RealityContent.rkassets` folder using **Reality Composer Pro**.
+2.  **Tech Artists** expose entities using **Components** in RCP.
+3.  **Developers** load the assets via `ILVisionAssets.bundle` and query for entities with specific components.
+4.  **Benefit**: No Git merge conflicts on the `.xcodeproj` when an artist adds a 3D model.
+
+---
+
+## Key Implementation Examples
+
+### Dependency Injection (ILVisionCore)
+
+```swift
+@MainActor
+public struct ILVisionInjection {
+    public static let shared = ILVisionInjection()
+    
+    public let sharePlayManager: SharePlayRepository
+    
+    private init() {
+        // Wire concrete implementation to protocol
+        self.sharePlayManager = SharePlayManager()
+    }
+}
+```
+
+### ECS-SwiftUI Bridge (AppModelServiceComponent)
+
+```swift
+/// Attached to a 'Controller' entity in the scene to bridge the UI Model to ECS
+public struct AppModelServiceComponent: Component {
+    public weak var appModel: AppModel?
+    
+    public init(appModel: AppModel) {
+        self.appModel = appModel
+    }
+}
+```
+
+---
+
+## Dependencies
+
+- **visionOS 2.0 (v26.0)**: Required for Skeletal Hand Tracking and GroupActivities enhancements.
+- **GroupActivities**: Real-time collaborative state synchronization.
+- **RealityKit**: High-performance 3D rendering.
+- **ARKit**: Hand tracking and scene understanding.
