@@ -7,6 +7,7 @@ public struct StrokeMessage: Codable, Sendable {
     public let id: UUID
     public let senderID: UUID
     public let action: StrokeAction
+    public let strokeID: UUID?
     
     // Drawing data (only used when action == .draw)
     public let positionX: Float
@@ -21,11 +22,13 @@ public struct StrokeMessage: Codable, Sendable {
     public enum StrokeAction: String, Codable, Sendable {
         case draw
         case clear
+        case undo
     }
     
     /// Convenience: create a draw message
     public static func draw(
         senderID: UUID,
+        strokeID: UUID? = nil,
         position: SIMD3<Float>,
         color: SIMD4<Float>,
         radius: Float
@@ -34,6 +37,7 @@ public struct StrokeMessage: Codable, Sendable {
             id: UUID(),
             senderID: senderID,
             action: .draw,
+            strokeID: strokeID,
             positionX: position.x,
             positionY: position.y,
             positionZ: position.z,
@@ -51,6 +55,20 @@ public struct StrokeMessage: Codable, Sendable {
             id: UUID(),
             senderID: senderID,
             action: .clear,
+            strokeID: nil,
+            positionX: 0, positionY: 0, positionZ: 0,
+            colorR: 0, colorG: 0, colorB: 0, colorA: 0,
+            radius: 0
+        )
+    }
+
+    /// Convenience: create an undo message
+    public static func undo(senderID: UUID) -> StrokeMessage {
+        StrokeMessage(
+            id: UUID(),
+            senderID: senderID,
+            action: .undo,
+            strokeID: nil,
             positionX: 0, positionY: 0, positionZ: 0,
             colorR: 0, colorG: 0, colorB: 0, colorA: 0,
             radius: 0
@@ -71,6 +89,11 @@ public class AppModel {
     public var selectedColor: DrawColor = .white
     public var strokeWidth: Float = 0.005
     public var strokeCount: Int = 0
+    
+    // Playback state
+    public var isPlaybackActive: Bool = false
+    public var playbackProgress: Float = 0.0 
+    public var isRequestingClear: Bool = false
     
     public init() {}
     

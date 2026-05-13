@@ -113,4 +113,16 @@ public class SharePlayManager: SharePlayRepository, ObservableObject {
         guard let messenger = messenger else { return }
         try? await messenger.send(message)
     }
+    
+    public func undo() async {
+        let message = StrokeMessage.undo(senderID: localParticipantID)
+        
+        // 1. Send to others
+        if let messenger = messenger {
+            try? await messenger.send(message)
+        }
+        
+        // 2. Add to local buffer so the DrawingSystem undos locally
+        receiveMessage(message)
+    }
 }

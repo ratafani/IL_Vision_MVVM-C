@@ -9,6 +9,15 @@ public protocol DrawingSettingsRepository {
     func setStrokeWidth(_ value: Float)
 }
 
+/// Domain-level protocol for recording and replaying drawing history
+@MainActor
+public protocol DrawingHistoryRepository {
+    func addStroke(_ message: StrokeMessage)
+    func getAllStrokes() -> [StrokeMessage]
+    func clearHistory()
+    func undoLastStroke()
+}
+
 /// Domain-level protocol for SharePlay session management
 @MainActor
 public protocol SharePlayRepository: AnyObject {
@@ -29,6 +38,9 @@ public protocol SharePlayRepository: AnyObject {
     
     /// Send a stroke to all participants
     func sendStroke(_ message: StrokeMessage) async
+    
+    /// Request an undo on all connected devices
+    func undo() async
     
     /// Stream of incoming strokes from other participants
     var incomingStrokes: AsyncStream<StrokeMessage> { get }

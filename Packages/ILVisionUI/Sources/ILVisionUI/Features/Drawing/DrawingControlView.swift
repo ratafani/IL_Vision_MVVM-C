@@ -37,7 +37,16 @@ public struct DrawingControlView: View {
             }
             
             Divider().frame(height: 30)
-            
+
+            // Undo button
+            Button {
+                undoLastAction()
+            } label: {
+                Label("Undo", systemImage: "arrow.uturn.backward")
+            }
+            .buttonStyle(.bordered)
+            .disabled(viewModel?.strokeCount == 0)
+
             // Clear button
             Button {
                 clearCanvas()
@@ -45,6 +54,26 @@ public struct DrawingControlView: View {
                 Label("Clear", systemImage: "trash")
             }
             .buttonStyle(.bordered)
+            
+            Divider().frame(height: 30)
+            
+            // Playback Toggle
+            Button {
+                viewModel?.togglePlayback()
+            } label: {
+                Label(appModel.isPlaybackActive ? "Stop" : "Play", 
+                      systemImage: appModel.isPlaybackActive ? "stop.fill" : "play.fill")
+            }
+            .buttonStyle(.bordered)
+            .tint(appModel.isPlaybackActive ? .orange : .blue)
+            
+            if appModel.isPlaybackActive {
+                Slider(value: Bindable(appModel).playbackProgress, in: 0...1)
+                    .frame(width: 150)
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
+            }
+            
+            Divider().frame(height: 30)
             
             // Exit button
             Button(role: .destructive) {
@@ -61,18 +90,41 @@ public struct DrawingControlView: View {
                 appModel: appModel
             )
         }
+        .onDisappear {
+            viewModel?.stopPlayback()
+        }
     }
     
     private func clearCanvas() {
+        // 1. Tell Simulation to remove entities
+        appModel.isRequestingClear = true
+        
+        // 2. Broadcast clear to SharePlay
         let manager = ILVisionInjection.shared.sharePlayManager
         if manager.isSharing {
             let msg = StrokeMessage.clear(senderID: manager.localParticipantID)
             Task { await manager.sendStroke(msg) }
         }
+        
+        // 3. Reset local counts
         viewModel?.strokeCount = 0
+        
+        // Note: We do NOT call historyRepository.clearHistory() here,
+        // so that 'Play' still works after 'Clear'.
+    }
+    
+    private func undoLastAction() {
+        let manager = ILVisionInjection.shared.sharePlayManager
+        Task {
+            await manager.undo()
+            if let count = viewModel?.strokeCount {
+                viewModel?.strokeCount = max(0, count - 1)
+            }
+        }
     }
     
     private func exitDrawing() {
+        viewModel?.stopPlayback()
         Task {
             await coordinator.endSimulation(
                 dismissImmersiveSpace: dismissImmersiveSpace,

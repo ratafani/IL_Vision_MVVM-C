@@ -37,4 +37,35 @@ public class DrawingViewModel {
         get { appModel.strokeCount }
         set { appModel.strokeCount = newValue }
     }
+    
+    // --- CLEAN ARCHITECTURE: Playback Logic in ViewModel ---
+    private var playbackTimer: Timer?
+    
+    public func togglePlayback() {
+        appModel.isPlaybackActive.toggle()
+        
+        if appModel.isPlaybackActive {
+            appModel.playbackProgress = 0.0
+            
+            playbackTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
+                guard let self = self else { return }
+                Task { @MainActor in
+                    if self.appModel.playbackProgress < 1.0 {
+                        self.appModel.playbackProgress += 0.01
+                    } else {
+                        self.stopPlayback()
+                    }
+                }
+            }
+        } else {
+            stopPlayback()
+        }
+    }
+    
+    public func stopPlayback() {
+        playbackTimer?.invalidate()
+        playbackTimer = nil
+        appModel.isPlaybackActive = false
+        appModel.playbackProgress = 1.0
+    }
 }

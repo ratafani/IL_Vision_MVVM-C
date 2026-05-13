@@ -11,6 +11,7 @@ public struct ILVisionInjection {
     private let repository: DrawingSettingsRepository
     public let useCase: DrawingSettingsUseCase
     public let sharePlayManager: SharePlayManager
+    public let historyRepository: DrawingHistoryRepository
     
     private init() {
         let ds = DrawingSettingsDataSourceImpl()
@@ -19,5 +20,6 @@ public struct ILVisionInjection {
         self.repository = repo
         self.useCase = DrawingSettingsUseCaseImpl(repository: repo)
         self.sharePlayManager = SharePlayManager()
+        self.historyRepository = DrawingHistoryRepositoryImpl()
     }
 }

@@ -1,4 +1,5 @@
 import RealityKit
+import Foundation
 import ILVisionDomain
 import ILVisionData
 
@@ -24,6 +25,12 @@ public struct DrawingComponent: Component {
     public var pinkyFrameCount: Int = 0
     public var isPinkyFiltered: Bool = false
     
+    /// Reference to the entity grouping current dots (used for flattening)
+    public var currentStrokeEntity: Entity? = nil
+    
+    /// Unique ID for the current stroke (used for history grouping)
+    public var currentStrokeID: UUID? = nil
+    
     public init() {}
 }
 
@@ -41,4 +48,11 @@ public struct SharePlayReceiverComponent: Component {
     public init(manager: SharePlayManager) {
         self.manager = manager
     }
+}
+
+/// Stores simulation-side state for the playback animation
+public struct PlaybackComponent: Component {
+    public var isPlaying: Bool = false
+    
+    public init() {}
 }

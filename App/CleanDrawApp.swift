@@ -19,9 +19,10 @@ struct CleanDrawApp: App {
         
         // Register ECS Systems
         DrawingSystem.registerSystem()
+        PlaybackSystem.registerSystem()
         
         // Start SharePlay listener
-        Task {    
+        Task {
             await ILVisionInjection.shared.sharePlayManager.startListening()
         }
     }
